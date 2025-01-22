@@ -1,24 +1,45 @@
 function hasTargetSum(array, target) {
-  // Write your algorithm here
+  const seenNumbers = new Set();
+
+  for (let number of array) {
+    const complement = target - number;
+
+    if (seenNumbers.has(complement)) {
+      return true;
+    }
+
+    seenNumbers.add(number);
+  }
+
+  return false;
 }
 
 /* 
-  Write the Big O time complexity of your function here
-*/
-
-/* 
-  Add your pseudocode here
+1. Create an empty set to store numbers we've seen so far.
+2. Loop through the array:
+   - For the current number, calculate the "complement" needed to reach the target.
+   - If the complement is in the set, return true.
+   - Otherwise, add the current number to the set.
+3. If the loop finishes without finding a pair, return false.
 */
 
 /*
-  Add written explanation of your solution here
+This function uses a set to store numbers that have been seen so far. 
+For every number in the array, it calculates the complement needed to 
+reach the target. If the complement is found in the set, the function 
+returns true. Otherwise, it adds the current number to the set. 
+This approach avoids nested loops and reduces the time complexity to O(n).
 */
 
-// You can run `node index.js` to view these console logs
+// Test cases
 if (require.main === module) {
-  // add your own custom tests in here
   console.log("Expecting: true");
   console.log("=>", hasTargetSum([3, 8, 12, 4, 11, 7], 10));
+
+  console.log("");
+
+  console.log("Expecting: false");
+  console.log("=>", hasTargetSum([1, 2, 5], 4));
 
   console.log("");
 
@@ -28,7 +49,12 @@ if (require.main === module) {
   console.log("");
 
   console.log("Expecting: false");
-  console.log("=>", hasTargetSum([1, 2, 5], 4));
+  console.log("=>", hasTargetSum([], 5));
+
+  console.log("");
+
+  console.log("Expecting: false");
+  console.log("=>", hasTargetSum([5], 10));
 }
 
 module.exports = hasTargetSum;
